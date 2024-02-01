@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Web Interface</title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , minimal-ui">
+    <meta name="AidEnviroment, PinniSOFT">
+    <meta name="web_author" content="Not-for-profit sustainability strategy organisation">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description"
+        content="We are a not-for-profit sustainability research, strategy and implementation organisation working to achieve transformative sector change.">
+
+
+    <script>
+        // Initialize Font Awesome
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="assets\\fontawesome-free-6.4.2-web\\js\\all.min.js"></script>
+
+
+
+    <!-- links -->
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/brands.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/solid.css">
+
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/font.css">
+    <link rel="stylesheet" href="assets/css/mapshaper.css">
+
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work.css">
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work2.css">
+
+    <script src="assets/links/jquery.min.js"></script>
+    <script src="assets/links/popper.min.js"></script>
+    <script src="assets/links/bootstrap.bundle.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="assets/pics/favicon.ico">
+    <style>
+        body {
+
+            background-color: #ffffff;
+            margin: 0;
+
+            color: #333;
+        }
+
+        .main {
+            padding: 30px;
+            padding-top: 100px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        .main .title {
+            border-bottom: 2px thin #333;
+        }
+
+
+        p {
+            color: #000;
+            margin-bottom: 10px;
+        }
+        h2{
+            border-bottom: #000 2px solid;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            background-color: #f9f9f9;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header-container">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light custom-navbar">
+            <div class="logo">
+                <a class="navbar-brand" href="command-line-tool.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo">
+
+                </a>
+            </div>
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-line-tool.html">Command Line Tool</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-reference.html">Command Reference</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="simplification.html">Simplification</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topotopy.html">Topotopy</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="tutoial.html">Tutorial</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link active" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="using-shapefiles.html">Using Shapefiles</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topojson.html">TopoJSON Client</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="main">
+
+
+        <h2 class="title">Web Interface</h2>
+        <p>This page is for developers who want to use mapshaper's geoprocessing functions in their own applications.
+            Updated for version 0.5.0</p>
+
+        
+
+        <section>
+
+            
+            
+            <br>
+            <h3>Introduction</h3>
+            <p>Mapshaper's web interface is useful for simplifying polygon and polyline datasets interactively. It also supports <a href="command-reference.html">command line editing</a> via a built-in console.<br>
+
+                All processing is done on the client side. Your data stays private, even when using the public website.<br>
+                
+                The latest version of the web interface is online at <a href="index.html">mapshaper</a>.
+            </p>
+            <br>
+            <br>
+
+            <h3>Loading files via query string</h3>
+            <p>You can add a comma-separated list of file urls as a query string, as in this </p>
+            <br>
+            <br>
+
+            <h3>Running the web UI locally</h3>
+            <p>The mapshaper distribution includes the script <code>mapshaper-gui</code>, which starts a Node web server on localhost and loads mapshaper in a browser at the address <code>http://localhost:5555</code>. Use the <code>--port</code> option to run mapshaper on a different port.<br>
+
+                You can list one or more files on the command line to bypass mapshaper's import dialog, like this: <code>mapshaper-gui states.shp rivers.shp</code>.
+            </p>
+            <br>
+            <br>
+
+            <h3>Exporting a browser session as a command line string for the <code>mapshaper</code> shell program to run.</h3>
+            <p>If you run <code>history</code> in the web UI console, the console will translate the current browser session into a command line string. You will probably have to edit this output before it can be successfully run. In particular, you will have to update the paths to the input files. This is because the web browser only knows the names of input files, not their full paths in your computer's filesystem.
+            </p>
+            <br>
+            <br>
+
+            <h3>Tips for importing Shapefiles</h3>
+            <p>In addition to the .shp file, make sure to also drag-drop or select the .dbf and .prj files from your Shapefile.<br>
+
+                If an error message appears warning about an unkown text encoding, you will have to re-import your file, after specifying the correct text encoding in mapshaper's import options dialog. For example, for a file in the Big-5 encoding, you would enter <code>encoding=big5</code>.
+            </p>
+            <br>
+            <br>
+
+
+            <h3>Browser support</h3>
+            <p>Mapshaper works in recent versions of Chrome, Firefox, Internet Explorer and Safari. If you encounter out-of-memory errors while editing a large file, try Firefox, which has been used successfully with Shapefiles larger than 1GB.
+
+            </p>
+        </section>
+
+
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+
+                    <ul class="footer-links">
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">General Inquiries</h6>
+                                <p><a href="mailto:info@pinnisoft.com">info@aidenvironment.org</a>
+                                </p>
+                                <p></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">Call us on</h6>
+                                <p><a href="https://wa.link/d6r2ly"> +256 (0)393208817</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <h6 class="address-type">Physical address</h6>
+                            <p><span class="z8gr9e">Plot 99 Luthuli Avenue, Kampala
+                                    Uganda</span></p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-xs-6 col-md-4" id="quick">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="https://aidenvironment.org/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="https://aidenvironment.org/code-of-conduct/">Code of Conduct</a></li>
+                        <li><a href="https://aidenvironment.org/contact/">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3" id="categories">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="command-reference.html">Command Reference</a></li>
+                        <li><a href="command-line-tool.html">Command Line Tool</a></li>
+                        <li><a href="topotopy.html">Topology</a></li>
+                        <li><a href="tutoial.html">Tutorial</a></li>
+                        <li><a href="web-interface.html">Web-interface</a></li>
+                        <li><a href="using-shapefiles.html">Using Shapefiles</a></li>
+                        <li><a href="simplification.html">Simplification</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="absolute-footer">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 logo">
+                    <a class="navbar-brand" href="home.html">
+                        <img src="assets/pics/aidlogo.png" alt="Logo" id="navbar-logo">
+                        <!-- <span class="logo-text"> aid enviroment</span> -->
+                    </a>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div>&copy; <span class="copyright-year">2023</span>
+                        AidEnvironment. All rights reserved.
+                        <span class="Links">
+                            <a href="https://www.pinnisoft.com/#[object%20Object]" id="foot-link"
+                                data-nls="footer-link-contact" target="_blank">PinniSOFT
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://facebook.com/aidenvironment">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li><a class="twitter" href="https://www.twitter.com/aidenvironment">
+                                <i class="fa-brands fa-x-twitter"></i></a>
+                        </li>
+                        <li><a class="dribbble" href="https://www.youtube.com/@aidenvironment7565">
+                                <i class="fa-brands fa-youtube"></i></a>
+                        </li>
+                        <li><a class="linkedin" href="https://ug.linkedin.com/company/aidenvironment">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find the element that contains the copyright year
+            var copyrightYearElement = document.querySelector(".copyright-year");
+
+            if (copyrightYearElement) {
+
+                var currentYear = new Date().getFullYear();
+
+
+                copyrightYearElement.textContent = currentYear;
+            }
+        });
+    </script>
+    <script>
+        // Activate Bootstrap navbar-toggler
+        $(document).ready(function () {
+            $('.navbar-toggler').on('click', function () {
+                $(this).toggleClass('active');
+            });
+        });
+
+        // Make the header sticky on scroll
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 100) {
+                $('.navbar').addClass('sticky-header');
+            } else {
+                $('.navbar').removeClass('sticky-header');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 800, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    </script>
+    <script src="assets/js/offcanvas.js"></script>
+
+    <script src="assets/links/slim.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>

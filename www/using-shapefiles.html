@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Using mapshaper programmatically</title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , minimal-ui">
+    <meta name="AidEnviroment, PinniSOFT">
+    <meta name="web_author" content="Not-for-profit sustainability strategy organisation">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description"
+        content="We are a not-for-profit sustainability research, strategy and implementation organisation working to achieve transformative sector change.">
+
+
+    <script>
+        // Initialize Font Awesome
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="assets\\fontawesome-free-6.4.2-web\\js\\all.min.js"></script>
+
+
+
+    <!-- links -->
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/brands.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/solid.css">
+
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font.css">
+    <link rel="stylesheet" href="assets/css/mapshaper.css">
+
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work.css">
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work2.css">
+
+    <script src="assets/links/jquery.min.js"></script>
+    <script src="assets/links/popper.min.js"></script>
+    <script src="assets/links/bootstrap.bundle.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="assets/pics/favicon.ico">
+    <style>
+        body {
+
+            background-color: #ffffff;
+            margin: 0;
+
+            color: #333;
+        }
+
+        .main {
+            padding: 30px;
+            padding-top: 100px;
+        }
+        h2{
+            border-bottom: #000 2px solid;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        .main .title {
+            border-bottom: 2px thin #333;
+        }
+
+
+        p {
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .main img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+      overflow-x: auto;
+    }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {           
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header-container">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light custom-navbar">
+            <div class="logo">
+                <a class="navbar-brand" href="command-line-tool.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo">
+
+                </a>
+            </div>
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-line-tool.html">Command Line Tool</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-reference.html">Command Reference</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="simplification.html">Simplification</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topotopy.html">Topotopy</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="tutoial.html">Tutorial</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link active" href="using-shapefiles.html">Using Shapefiles</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topojson.html">TopoJSON Client</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="main">
+
+
+        <h2 class="title">Using mapshaper programmatically</h2>
+        <p>This page is for developers who want to use mapshaper's geoprocessing functions in their own applications.
+            Updated for version 0.5.0</p>
+
+        <section>
+            <h4>Option One: make</h4>
+            <p>One way of scripting mapshaper is to call the mapshaper command line program from <code>make</code> or
+                other build tool.<br>
+
+                If you include mapshaper as a dependency in the <code>package.json</code> file of a Node.js project, the
+                executable programs <code>mapshaper</code> and <code>mapshaper-xl</code> can be found in
+                <code>node_modules/.bin/</code> and <code>node_modules/mapshaper/bin/</code>.<br>
+
+                Here's an example Makefile target:
+            </p>
+            <br>
+            <br>
+
+            <pre>
+                <code>europe.json: shp/europe.shp
+                    mapshaper snap $ encoding=utf8  \
+                    -rename-layers countries \
+                    -filter "CONTINENT == 'Europe'" \
+                    -simplify 15% keep-shapes \
+                    -o format=topojson $@
+                </code>
+            </pre>
+        </section>
+
+        <section>
+
+            <h4>Option Two: Node API</h4>
+            <p>Mapshaper has three API functions for running editing commands: <code>runCommands()</code>,
+                <code>applyCommands()</code> and <code>runCommandsXL()</code>. All three functions take a
+                <code>commands</code> option, which is a string containing the same command line options that are passed
+                to the <code>mapshaper</code> command line program.
+            </p>
+            <br>
+            <h3>runCommands()</h3>
+            <p>runCommands(<code>commands[, input][, callback]</code>)<br>
+
+                <code>commands</code> A command line string containing mapshaper commands (typically starting with
+                <code>-i</code> and ending with <code>-o</code>).<br>
+
+                <code>input</code> An optional JS object containing contents of files referenced by <code>-i</code>
+                command(s), indexed by file name. Input files are read from the filesystem if they are not present in
+                the <code>input</code> argument.<br>
+
+                <code>callback</code> An optional Node-style callback: <code>function(Error)</code>. If called without a
+                callback, <code>runCommands()</code> returns a Promise.
+            </p>
+            <br>
+            <pre>
+                <code>// Example: converting a directory of Shapefiles to GeoJSON<br>
+                    var mapshaper = require('mapshaper');<br>
+                    mapshaper.runCommands('-i shapefiles/*.shp -o geojson/ format=geojson');
+                </code>
+            </pre>
+            
+            <br>
+            <br>
+
+            <h3>applyCommands()</h3>
+            <p>runCommands(<code>commands[, input][, callback]</code>)<br>
+
+                This function has the same signature as <code>runCommands()</code>. Instead of writing files generated
+                by the -o command, mapshaper sends the output file contents to a callback (or Promise if a callback is
+                not provided). File data is placed in a JavaScript object and indexed by filename.
+
+
+            </p>
+            <pre>
+                <code>// Example: converting a CSV string to GeoJSON<br>
+                    const input = {'input.csv': 'lat,lng,value\n40.3,-72.3,1000'};<br>
+                    const cmd = '-i input.csv -points x=lng y=lat -o output.geojson';<br><br>
+                    
+                    // using callback<br>
+                    mapshaper.applyCommands(cmd, input, function(err, output) {<br>
+                        // do something with {"output.geojson": [Buffer]}<br>
+                    });<br><br>
+                    
+                    // using Promise<br>
+                    const output = await mapshaper.applyCommands(cmd, input);
+                </code>
+            </pre>
+            
+            <br>
+            <br>
+
+            <h3>runCommandsXL()</h3>
+            <p>runCommands(<code>commands[, input][, callback]</code>)<br>
+
+                This function runs commands in a sub-process that has a larger maximum heap size than Node's
+                default.<br>
+                Calling this function is equivalent to running the <code>mapshaper-xl</code> command line program. You
+                can override<br>
+                the default 8gb amount by passing an options object, like this: <code>{xl: "16gb"}</code>.<br>
+
+                This function only takes input from the filesystem; unlike <code>runCommands()</code>, there is no input
+                option.</p>
+            <br>
+            <br>
+
+            <h3>Note on Shapefile input</h3>
+            <p>To input a Shapefile using <code>applyCommands()</code> or <code>runCommands()</code>, in addition to passing the contents of the
+                <code>.shp</code> file (as a Buffer or ArrayBuffer), you'll probably want to pass the <code>.dbf </code>file (as a Buffer or
+                ArrayBuffer) and the <code>.prj</code> file (as a string). The .dbf file contains attribute data and the <code>.prj</code> file
+                contains coordinate system data.</p>
+        </section>
+
+
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+
+                    <ul class="footer-links">
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">General Inquiries</h6>
+                                <p><a href="mailto:info@pinnisoft.com">info@aidenvironment.org</a>
+                                </p>
+                                <p></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">Call us on</h6>
+                                <p><a href="https://wa.link/d6r2ly"> +256 (0)393208817</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <h6 class="address-type">Physical address</h6>
+                            <p><span class="z8gr9e">Plot 99 Luthuli Avenue, Kampala
+                                    Uganda</span></p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-xs-6 col-md-4" id="quick">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="https://aidenvironment.org/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="https://aidenvironment.org/code-of-conduct/">Code of Conduct</a></li>
+                        <li><a href="https://aidenvironment.org/contact/">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3" id="categories">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="command-reference.html">Command Reference</a></li>
+                        <li><a href="command-line-tool.html">Command Line Tool</a></li>
+                        <li><a href="topotopy.html">Topology</a></li>
+                        <li><a href="tutoial.html">Tutorial</a></li>
+                        <li><a href="web-interface.html">Web-interface</a></li>
+                        <li><a href="using-shapefiles.html">Using Shapefiles</a></li>
+                        <li><a href="simplification.html">Simplification</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="absolute-footer">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 logo">
+                    <a class="navbar-brand" href="home.html">
+                        <img src="assets/pics/aidlogo.png" alt="Logo" id="navbar-logo">
+                        <!-- <span class="logo-text"> aid enviroment</span> -->
+                    </a>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div>&copy; <span class="copyright-year">2023</span>
+                        AidEnvironment. All rights reserved.
+                        <span class="Links">
+                            <a href="https://www.pinnisoft.com/#[object%20Object]" id="foot-link"
+                                data-nls="footer-link-contact" target="_blank">PinniSOFT
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://facebook.com/aidenvironment">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li><a class="twitter" href="https://www.twitter.com/aidenvironment">
+                                <i class="fa-brands fa-x-twitter"></i></a>
+                        </li>
+                        <li><a class="dribbble" href="https://www.youtube.com/@aidenvironment7565">
+                                <i class="fa-brands fa-youtube"></i></a>
+                        </li>
+                        <li><a class="linkedin" href="https://ug.linkedin.com/company/aidenvironment">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find the element that contains the copyright year
+            var copyrightYearElement = document.querySelector(".copyright-year");
+
+            if (copyrightYearElement) {
+
+                var currentYear = new Date().getFullYear();
+
+
+                copyrightYearElement.textContent = currentYear;
+            }
+        });
+    </script>
+    <script>
+        // Activate Bootstrap navbar-toggler
+        $(document).ready(function () {
+            $('.navbar-toggler').on('click', function () {
+                $(this).toggleClass('active');
+            });
+        });
+
+        // Make the header sticky on scroll
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 100) {
+                $('.navbar').addClass('sticky-header');
+            } else {
+                $('.navbar').removeClass('sticky-header');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 800, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    </script>
+    <script src="assets/js/offcanvas.js"></script>
+
+    <script src="assets/links/slim.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>

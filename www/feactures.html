@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Features</title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , minimal-ui">
+    <meta name="AidEnviroment, PinniSOFT">
+    <meta name="web_author" content="Not-for-profit sustainability strategy organisation">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description"
+        content="We are a not-for-profit sustainability research, strategy and implementation organisation working to achieve transformative sector change.">
+
+
+    <script>
+        // Initialize Font Awesome
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="assets\\fontawesome-free-6.4.2-web\\js\\all.min.js"></script>
+
+
+
+     <!-- links -->
+     <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+     <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/brands.css">
+     <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/fontawesome.css">
+     <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/solid.css">
+ 
+     <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+     <link rel="stylesheet" href="assets/css/font.css">
+     <link rel="stylesheet" href="assets/css/mapshaper.css">
+ 
+     <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work.css">
+     <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work2.css">
+ 
+     <script src="assets/links/jquery.min.js"></script>
+     <script src="assets/links/popper.min.js"></script>
+     <script src="assets/links/bootstrap.bundle.min.js"></script>
+ 
+     <link rel="icon" type="image/x-icon" href="assets/pics/favicon.ico">
+     <style>
+         body {
+ 
+             background-color: #ffffff;
+             margin: 0;
+ 
+             color: #333;
+         }
+ 
+         .main {
+             padding: 30px;
+             padding-top: 100px;
+         }
+ 
+         h1,
+         h2,
+         h3 {
+             color: #333;
+         }
+ 
+         h6,
+         h4 {
+             font-weight: bold;
+         }
+ 
+         h2 {
+             border-bottom: #000 2px solid;
+         }
+ 
+         h4 {
+             border-bottom: #333 2px thin;
+         }
+ 
+         .main .title {
+             border-bottom: 2px thin #333;
+         }
+ 
+ 
+         p {
+             color: #000;
+             margin-bottom: 10px;
+         }
+ 
+         img {
+             max-width: 100%;
+             height: auto;
+             margin-bottom: 15px;
+             border-radius: 5px;
+             /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+         }
+ 
+         ul {
+             list-style-type: disc;
+             padding-left: 40px;
+         }
+ 
+         li {
+             margin-bottom: 5px;
+         }
+ 
+         pre {
+             background-color: #f1f1f1;
+             padding: 10px;
+             border-radius: 5px;
+             overflow-x: auto;
+         }
+ 
+         code {
+             padding: 2px 5px;
+             border-radius: 3px;
+         }
+     </style>
+</head>
+
+<body>
+
+    <!-- header  -->
+    <header class="header-container">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light custom-navbar">
+            <div class="logo">
+                <a class="navbar-brand" href="command-line-tool.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo">
+
+                </a>
+            </div>
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-line-tool.html">Command Line Tool</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-reference.html">Command eference</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="simplification.html">Simplification</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topotopy.html">Topotopy</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="tutoial.html">Tutorial</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topojson.html">TopoJSON Client</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+<main class="main">
+    <pre>
+        <code>
+            import reverse from "./reverse.js";
+import transform from "./transform.js";
+
+export default function(topology, o) {
+  if (typeof o === "string") o = topology.objects[o];
+  return o.type === "GeometryCollection"
+      ? {type: "FeatureCollection", features: o.geometries.map(function(o) { return feature(topology, o); })}
+      : feature(topology, o);
+}
+
+function feature(topology, o) {
+  var id = o.id,
+      bbox = o.bbox,
+      properties = o.properties == null ? {} : o.properties,
+      geometry = object(topology, o);
+  return id == null && bbox == null ? {type: "Feature", properties: properties, geometry: geometry}
+      : bbox == null ? {type: "Feature", id: id, properties: properties, geometry: geometry}
+      : {type: "Feature", id: id, bbox: bbox, properties: properties, geometry: geometry};
+}
+
+export function object(topology, o) {
+  var transformPoint = transform(topology.transform),
+      arcs = topology.arcs;
+
+  function arc(i, points) {
+    if (points.length) points.pop();
+    for (var a = arcs[i < 0 ? ~i : i], k = 0, n = a.length; k < n; ++k) {
+      points.push(transformPoint(a[k], k));
+    }
+    if (i < 0) reverse(points, n);
+  }
+
+  function point(p) {
+    return transformPoint(p);
+  }
+
+  function line(arcs) {
+    var points = [];
+    for (var i = 0, n = arcs.length; i < n; ++i) arc(arcs[i], points);
+    if (points.length < 2) points.push(points[0]); // This should never happen per the specification.
+    return points;
+  }
+
+  function ring(arcs) {
+    var points = line(arcs);
+    while (points.length < 4) points.push(points[0]); // This may happen if an arc has only two points.
+    return points;
+  }
+
+  function polygon(arcs) {
+    return arcs.map(ring);
+  }
+
+  function geometry(o) {
+    var type = o.type, coordinates;
+    switch (type) {
+      case "GeometryCollection": return {type: type, geometries: o.geometries.map(geometry)};
+      case "Point": coordinates = point(o.coordinates); break;
+      case "MultiPoint": coordinates = o.coordinates.map(point); break;
+      case "LineString": coordinates = line(o.arcs); break;
+      case "MultiLineString": coordinates = o.arcs.map(line); break;
+      case "Polygon": coordinates = polygon(o.arcs); break;
+      case "MultiPolygon": coordinates = o.arcs.map(polygon); break;
+      default: return null;
+    }
+    return {type: type, coordinates: coordinates};
+  }
+
+  return geometry(o);
+}
+        </code>
+    </pre>
+</main>
+<!-- footer  -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-5">
+
+                <ul class="footer-links">
+                    <li>
+                        <div class="contact-detail">
+                            <h6 class="contact-type">General Inquiries</h6>
+                            <p><a href="mailto:info@pinnisoft.com">info@aidenvironment.org</a>
+                            </p>
+                            <p></p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="contact-detail">
+                            <h6 class="contact-type">Call us on</h6>
+                            <p><a href="https://wa.link/d6r2ly"> +256 (0)393208817</a></p>
+                        </div>
+                    </li>
+                    <li>
+                        <h6 class="address-type">Physical address</h6>
+                        <p><span class="z8gr9e">Plot 99 Luthuli Avenue, Kampala
+                                Uganda</span></p>
+                    </li>
+                </ul>
+
+            </div>
+
+            <div class="col-xs-6 col-md-4" id="quick">
+                <h6>Categories</h6>
+                <ul class="footer-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="https://aidenvironment.org/privacy-policy/">Privacy Policy</a></li>
+                    <li><a href="https://aidenvironment.org/code-of-conduct/">Code of Conduct</a></li>
+                    <li><a href="https://aidenvironment.org/contact/">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="col-xs-6 col-md-3" id="categories">
+                <h6>Quick Links</h6>
+                <ul class="footer-links">
+                    <li><a href="command-reference.html">Command Reference</a></li>
+                    <li><a href="command-line-tool.html">Command Line Tool</a></li>
+                    <li><a href="topotopy.html">Topology</a></li>
+                    <li><a href="tutoial.html">Tutorial</a></li>
+                    <li><a href="web-interface.html">Web-interface</a></li>
+                    <li><a href="using-shapefiles.html">Using Shapefiles</a></li>
+                    <li><a href="simplification.html">Simplification</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="absolute-footer">
+        <div class="row">
+            <div class="col-md-4 col-sm-6 col-xs-12 logo">
+                <a class="navbar-brand" href="home.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo" id="navbar-logo">
+                    <!-- <span class="logo-text"> aid enviroment</span> -->
+                </a>
+            </div>
+
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div>&copy; <span class="copyright-year">2023</span>
+                    AidEnvironment. All rights reserved.
+                    <span class="Links">
+                        <a href="https://www.pinnisoft.com/#[object%20Object]" id="foot-link"
+                            data-nls="footer-link-contact" target="_blank">PinniSOFT
+                        </a>
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <ul class="social-icons">
+                    <li><a class="facebook" href="https://facebook.com/aidenvironment">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li><a class="twitter" href="https://www.twitter.com/aidenvironment">
+                            <i class="fa-brands fa-x-twitter"></i></a>
+                    </li>
+                    <li><a class="dribbble" href="https://www.youtube.com/@aidenvironment7565">
+                            <i class="fa-brands fa-youtube"></i></a>
+                    </li>
+                    <li><a class="linkedin" href="https://ug.linkedin.com/company/aidenvironment">
+                            <i class="fa-brands fa-linkedin-in"></i>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</footer>
+
+
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Find the element that contains the copyright year
+        var copyrightYearElement = document.querySelector(".copyright-year");
+
+        if (copyrightYearElement) {
+
+            var currentYear = new Date().getFullYear();
+
+
+            copyrightYearElement.textContent = currentYear;
+        }
+    });
+</script>
+<script>
+    // Activate Bootstrap navbar-toggler
+    $(document).ready(function () {
+        $('.navbar-toggler').on('click', function () {
+            $(this).toggleClass('active');
+        });
+    });
+
+    // Make the header sticky on scroll
+    $(window).on('scroll', function () {
+        if ($(window).scrollTop() > 100) {
+            $('.navbar').addClass('sticky-header');
+        } else {
+            $('.navbar').removeClass('sticky-header');
+        }
+    });
+
+    // Smooth scrolling for anchor links
+    $('a[href^="#"]').on('click', function (e) {
+        e.preventDefault();
+
+        var target = this.hash;
+        var $target = $(target);
+
+        $('html, body').stop().animate({
+            'scrollTop': $target.offset().top
+        }, 800, 'swing', function () {
+            window.location.hash = target;
+        });
+    });
+</script>
+<script src="assets/js/offcanvas.js"></script>
+
+<script src="assets/links/slim.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>

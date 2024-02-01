@@ -1,0 +1,15 @@
+.DS_Store
+__*
+node_modules
+npm-debug.log
+.npmignore
+.jshintrc
+/mapshaper.js
+/www/mapshaper-gui.js
+/www/mapshaper.js
+/www/node_modules.js
+# /www/basemap.js
+pre-publish
+pre-release.js
+release*
+nacis

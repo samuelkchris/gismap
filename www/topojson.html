@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Topology Issues</title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , minimal-ui">
+    <meta name="AidEnviroment, PinniSOFT">
+    <meta name="web_author" content="Not-for-profit sustainability strategy organisation">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description"
+        content="We are a not-for-profit sustainability research, strategy and implementation organisation working to achieve transformative sector change.">
+
+
+    <script>
+        // Initialize Font Awesome
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="assets\\fontawesome-free-6.4.2-web\\js\\all.min.js"></script>
+
+
+
+     <!-- links -->
+     <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+     <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/brands.css">
+     <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/fontawesome.css">
+     <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/solid.css">
+ 
+     <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+     <link rel="stylesheet" href="assets/css/font.css">
+     <link rel="stylesheet" href="assets/css/mapshaper.css">
+ 
+     <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work.css">
+     <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work2.css">
+ 
+     <script src="assets/links/jquery.min.js"></script>
+     <script src="assets/links/popper.min.js"></script>
+     <script src="assets/links/bootstrap.bundle.min.js"></script>
+ 
+     <link rel="icon" type="image/x-icon" href="assets/pics/favicon.ico">
+     <style>
+         body {
+ 
+             background-color: #ffffff;
+             margin: 0;
+ 
+             color: #333;
+         }
+ 
+         .main {
+             padding: 30px;
+             padding-top: 100px;
+         }
+ 
+         h1,
+         h2,
+         h3 {
+             color: #333;
+         }
+ 
+         h6,
+         h4 {
+             font-weight: bold;
+         }
+ 
+         h2 {
+             border-bottom: #000 2px solid;
+         }
+ 
+         h4 {
+             border-bottom: #333 2px thin;
+         }
+ 
+         .main .title {
+             border-bottom: 2px thin #333;
+         }
+ 
+ 
+         p {
+             color: #000;
+             margin-bottom: 10px;
+         }
+ 
+         img {
+             max-width: 100%;
+             height: auto;
+             margin-bottom: 15px;
+             border-radius: 5px;
+             /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+         }
+ 
+         ul {
+             list-style-type: disc;
+             padding-left: 40px;
+         }
+ 
+         li {
+             margin-bottom: 5px;
+         }
+ 
+         pre {
+             background-color: #f1f1f1;
+             padding: 10px;
+             border-radius: 5px;
+             overflow-x: auto;
+         }
+ 
+         code {
+             padding: 2px 5px;
+             border-radius: 3px;
+         }
+     </style>
+</head>
+
+<body>
+
+    <!-- header  -->
+    <header class="header-container">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light custom-navbar">
+            <div class="logo">
+                <a class="navbar-brand" href="command-line-tool.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo">
+
+                </a>
+            </div>
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-line-tool.html">Command Line Tool</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-reference.html">Command eference</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="simplification.html">Simplification</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topotopy.html">Topotopy</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="tutoial.html">Tutorial</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link active" href="topojson.html">TopoJSON Client</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- body  -->
+    <main class="main">
+    <h1 id="topojson-client">TopoJSON Client</h1>
+    <p>The <strong>topojson-client</strong> module provides tools for manipulating <a
+            href="topojson.html">TopoJSON</a>, such as to <a href="#merge">merge shapes</a> or <a
+            href="#quantize">quantize coordinates</a>, and for converting back to <a href="#feature">GeoJSON</a> for
+        rendering with standard tools such as <a
+            href="d3geo.html">d3.geoPath</a>. For example, <a
+            href="#">bl.ocks.org/3783604</a>:</p>
+    <pre>
+        <code class="lang-html">
+            <span class="hljs-meta">&lt;!DOCTYPE html&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">canvas</span> <span class="hljs-attr">width</span>=<span class="hljs-string">"960"</span> <span class="hljs-attr">height</span>=<span class="hljs-string">"600"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">canvas</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://d3js.org/d3.v4.min.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/topojson-client@3"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+
+            <span class="hljs-keyword">var</span> context = d3.select(<span class="hljs-string">"canvas"</span>).node().getContext(<span class="hljs-string">"2d"</span>),
+                path = d3.geoPath().context(context);
+
+            d3.json(<span class="hljs-string">"https://d3js.org/us-10m.v1.json"</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(error, us)</span> </span>{
+            <span class="hljs-keyword">if</span> (error) <span class="hljs-keyword">throw</span> error;
+
+            context.beginPath();
+            path(topojson.mesh(us));
+            context.stroke();
+            });
+
+            </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+        </code>
+    </pre>
+    <h2 id="installing">Installing</h2>
+    <p>If you use NPM, <code>npm install topojson-client</code>. Otherwise, download the <a
+            href="#">latest release</a>. You can also load
+        directly from <a href="https://unpkg.com">UNPKG</a> as a <a
+            href="https://unpkg.com/topojson-client@3">standalone library</a>. AMD, CommonJS, and vanilla environments
+        are supported. In vanilla, a <code>topojson</code> global is exported:</p>
+    <pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"https://unpkg.com/topojson-client@3"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="actionscript">
+
+<span class="hljs-keyword">var</span> feature = topojson.feature(topology, <span class="hljs-string">"foo"</span>);
+
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+    <p>The TopoJSON client API is implemented using ES2015 modules. In compatible environments, you can import the
+        library as a namespace, like so:</p>
+    <pre><code class="lang-js"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> topojson <span class="hljs-keyword">from</span> <span class="hljs-string">"topojson-client"</span>;
+</code></pre>
+    <p><a href="https://runkit.com/npm/topojson-client">Try topojson-client in your browser.</a></p>
+    <h1 id="api-reference">API Reference</h1>
+    <p><a name="feature" href="#feature">#</a> topojson.<b>feature</b>(<i>topology</i>, <i>object</i>) <a
+            href="feactures.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>Returns the GeoJSON Feature or FeatureCollection for the specified <em>object</em> in the given
+        <em>topology</em>. If the specified object is a string, it is treated as
+        <em>topology</em>.objects[<em>object</em>]. Then, if the object is a GeometryCollection, a FeatureCollection is
+        returned, and each geometry in the collection is mapped to a Feature. Otherwise, a Feature is returned. The
+        returned feature is a shallow copy of the source <em>object</em>: they may share identifiers, bounding boxes,
+        properties and coordinates.</p>
+    <p>Some examples:</p>
+    <ul>
+        <li>A point is mapped to a feature with a geometry object of type “Point”.</li>
+        <li>Likewise for line strings, polygons, and other simple geometries.</li>
+        <li>A null geometry object (of type null in TopoJSON) is mapped to a feature with a null geometry object.</li>
+        <li>A geometry collection of points is mapped to a feature collection of features, each with a point geometry.
+        </li>
+        <li>A geometry collection of geometry collections is mapped to a feature collection of features, each with a
+            geometry collection.</li>
+    </ul>
+    <p>See <a href="test.html">feature-test.js</a>
+        for more examples.</p>
+    <p><a name="merge" href="#merge">#</a> topojson.<b>merge</b>(<i>topology</i>, <i>objects</i>) <a
+            href="topomerge.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>Returns the GeoJSON MultiPolygon geometry object representing the union for the specified array of Polygon and
+        MultiPolygon <em>objects</em> in the given <em>topology</em>. Interior borders shared by adjacent polygons are
+        removed. See <a href="#">Merging States</a> for an example. The returned
+        geometry is a shallow copy of the source <em>object</em>: they may share coordinates.</p>
+    <p><a name="mergeArcs" href="#mergeArcs">#</a> topojson.<b>mergeArcs</b>(<i>topology</i>, <i>objects</i>) <a
+            href="topomerge.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>Equivalent to <a href="#merge">topojson.merge</a>, but returns TopoJSON rather than GeoJSON. The returned
+        geometry is a shallow copy of the source <em>object</em>: they may share coordinates.</p>
+    <p><a name="mesh" href="#mesh">#</a> topojson.<b>mesh</b>(<i>topology</i>[, <i>object</i>[, <i>filter</i>]]) <a
+            href="mesh.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>Returns the GeoJSON MultiLineString geometry object representing the mesh for the specified <em>object</em> in
+        the given <em>topology</em>. This is useful for rendering strokes in complicated objects efficiently, as edges
+        that are shared by multiple features are only stroked once. If <em>object</em> is not specified, a mesh of the
+        entire topology is returned. The returned geometry is a shallow copy of the source <em>object</em>: they may
+        share coordinates.</p>
+    <p>An optional <em>filter</em> function may be specified to prune arcs from the returned mesh using the topology.
+        The filter function is called once for each candidate arc and takes two arguments, <em>a</em> and <em>b</em>,
+        two geometry objects that share that arc. Each arc is only included in the resulting mesh if the filter function
+        returns true. For typical map topologies the geometries <em>a</em> and <em>b</em> are adjacent polygons and the
+        candidate arc is their boundary. If an arc is only used by a single geometry then <em>a</em> and <em>b</em> are
+        identical. This property is useful for separating interior and exterior boundaries; an easy way to produce a
+        mesh of interior boundaries is:</p>
+    <pre><code class="lang-js"><span class="hljs-keyword">var</span> interiors = topojson.mesh(topology, <span class="hljs-keyword">object</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(a, b)</span> <span class="hljs-comment">{ return a !== b; }</span>);</span>
+</code></pre>
+    <p>See this <a href="#">county choropleth</a> for example. Note: the <em>a</em>
+        and <em>b</em> objects are TopoJSON objects (pulled directly from the topology), and not automatically converted
+        to GeoJSON features as by <a href="#feature">topojson.feature</a>.</p>
+    <p><a name="meshArcs" href="#meshArcs">#</a> topojson.<b>meshArcs</b>(<i>topology</i>[, <i>object</i>[,
+        <i>filter</i>]]) <a href="mesh.html"
+            title="Source">&lt;&gt;</a></p>
+    <p>Equivalent to <a href="#mesh">topojson.mesh</a>, but returns TopoJSON rather than GeoJSON. The returned geometry
+        is a shallow copy of the source <em>object</em>: they may share coordinates.</p>
+    <p><a name="neighbors" href="#neighbors">#</a> topojson.<b>neighbors</b>(<i>objects</i>) <a
+            href="neighbors.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>Returns an array representing the set of neighboring objects for each object in the specified <em>objects</em>
+        array. The returned array has the same number of elements as the input array; each element <em>i</em> in the
+        returned array is the array of indexes for neighbors of object <em>i</em> in the input array. For example, if
+        the specified objects array contains the features <em>foo</em> and <em>bar</em>, and these features are
+        neighbors, the returned array will be [[1], [0]], indicating that <em>foo</em> is a neighbor of <em>bar</em> and
+        <em>vice versa</em>. Each array of neighbor indexes for each object is guaranteed to be sorted in ascending
+        order.</p>
+    <p>For a practical example, see the <a href="#">world map</a> with topological
+        coloring.</p>
+    <h3 id="transforms">Transforms</h3>
+    <p><a name="bbox" href="#bbox">#</a> topojson.<b>bbox</b>(<i>topology</i>) <a
+            href="bbox.html" title="Source">&lt;&gt;</a></p>
+    <p>Returns the computed <a href="TopoJSOSpecification.html">bounding
+            box</a> of the specified <em>topology</em> [<em>x</em>₀, <em>y</em>₀, <em>x</em>₁, <em>y</em>₁] where
+        <em>x</em>₀ is the minimum <em>x</em>-value, <em>y</em>₀ is the minimum <em>y</em>-value, <em>x</em>₁ is the
+        maximum <em>x</em>-value, and <em>y</em>₁ is the maximum <em>y</em>-value. If the <em>topology</em> has no
+        points and no arcs, the returned bounding box is [∞, ∞, -∞, -∞]. (This method ignores the existing
+        <em>topology</em>.bbox, if any.)</p>
+    <p><a name="quantize" href="#quantize">#</a> topojson.<b>quantize</b>(<i>topology</i>, <i>transform</i>) <a
+            href="quantity.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>Returns a shallow copy of the specified <em>topology</em> with <a
+            href="TopoJSOSpecification.html">quantized and delta-encoded</a> arcs
+        according to the specified <a
+            href="TopoJSOSpecification.html"><em>transform</em>
+            object</a>. If the <em>topology</em> is already quantized, an error is thrown. See also <a
+            href="#topoquantize">topoquantize</a>.</p>
+    <p>If a quantization number <em>n</em> is specified instead of a <em>transform</em> object, the corresponding
+        transform object is first computed using the bounding box of the topology. In this case, the quantization number
+        <em>n</em> must be a positive integer greater than one which determines the maximum number of expressible values
+        per dimension in the resulting quantized coordinates; typically, a power of ten is chosen such as 1e4, 1e5 or
+        1e6. If the <em>topology</em> does not already have a <em>topology</em>.bbox, one is computed using <a
+            href="#bbox">topojson.bbox</a>.</p>
+    <p><a name="transform" href="#transform">#</a> topojson.<b>transform</b>(<i>transform</i>) <a
+            href="TopoJSOSpecification.html" title="Source">&lt;&gt;</a>
+    </p>
+    <p>If the specified <a
+            href="TopoJSOSpecification.html"><em>transform</em>
+            object</a> is non-null, returns a <a href="#_transform">point <em>transform</em> function</a> to remove
+        delta-encoding and apply the transform. If the <em>transform</em> is null, returns the identity function.</p>
+    <p><a name="untransform" href="#untransform">#</a> topojson.<b>untransform</b>(<i>transform</i>) <a
+            href="TopoJSOSpecification.html"
+            title="Source">&lt;&gt;</a></p>
+    <p>If the specified <a
+            href="TopoJSOSpecification.html"><em>transform</em>
+            object</a> is non-null, returns a <a href="#_transform">point <em>transform</em> function</a> to apply
+        quantized delta-encoding and remove the transform. If the <em>transform</em> is null, returns the identity
+        function. See also <a href="#quantize">topojson.quantize</a>.</p>
+    <p><a name="_transform" href="#_transform">#</a> <i>transform</i>(<i>point</i>[, <i>index</i>])</p>
+    <p>Applies this transform function to the specified <em>point</em>, returning a new point with the transformed
+        coordinates. If the specified <em>index</em> is truthy, the input <em>point</em> is treated as relative to the
+        previous point passed to this transform, as is the case with delta-encoded arcs.</p>
+    <h2 id="command-line-reference">Command Line Reference</h2>
+    <h3 id="topo2geo">topo2geo</h3>
+    <p><a name="topo2geo" href="#topo2geo">#</a> <b>topo2geo</b> [<i>options…</i>] &lt;<i>name</i>=<i>file</i>&gt;… <a
+            href="top2geo.html" title="Source">&lt;&gt;</a></p>
+    <p>Converts one or more TopoJSON objects from an input topology to one or more GeoJSON features. For example, to
+        convert the “states” TopoJSON GeometryCollection object in us.json to a GeoJSON feature collection in
+        us-states.json:</p>
+    <pre><code>topo2geo states=<span class="hljs-keyword">us</span>-states.json &lt; <span class="hljs-keyword">us</span>.json
+</code></pre>
+    <p>For convenience, you can omit the object name and specify only the file <em>name</em>; the object name will be
+        the basename of the file, with the directory and extension removed. For example, to convert the “states”
+        TopoJSON GeometryCollection object in us.json to a GeoJSON feature collection in states.json:</p>
+    <pre><code><span class="hljs-selector-tag">topo2geo</span> <span class="hljs-selector-tag">states</span><span class="hljs-selector-class">.json</span> &lt; <span class="hljs-selector-tag">us</span><span class="hljs-selector-class">.json</span>
+</code></pre>
+    <p>See also <a href="top2geo.html">geo2topo</a>.</p>
+    <p>To list the available object names, use <a href="#topo2geo_list">--list</a>.</p>
+    <p><a name="topo2geo_help" href="#topo2geo_help">#</a> topo2geo <b>-h</b>
+        <br><a href="#topo2geo_help">#</a> topo2geo <b>--help</b>
+    </p>
+    <p>Output usage information.</p>
+    <p><a name="topo2geo_version" href="#topo2geo_version">#</a> topo2geo <b>-V</b>
+        <br><a href="#topo2geo_version">#</a> topo2geo <b>--version</b>
+    </p>
+    <p>Output the version number.</p>
+    <p><a name="topo2geo_newline_delimited" href="#topo2geo_newline_delimited">#</a> topo2geo <b>-n</b>
+        <br><a href="#topo2geo_newline_delimited">#</a> topo2geo <b>--newline-delimited</b>
+    </p>
+    <p>Output <a href="http://ndjson.org/">newline-delimited JSON</a>, with one feature per line.</p>
+    <p><a name="topo2geo_in" href="#topo2geo_in">#</a> topo2geo <b>-i</b> <i>file</i>
+        <br><a href="#topo2geo_in">#</a> topo2geo <b>--in</b> <i>file</i>
+    </p>
+    <p>Specify the input TopoJSON file name. Defaults to “-” for stdin.</p>
+    <p><a name="topo2geo_list" href="#topo2geo_list">#</a> topo2geo <b>-l</b>
+        <br><a href="#topo2geo_list">#</a> topo2geo <b>--list</b>
+    </p>
+    <p>List the names of the objects in the input topology, and then exit. For example, this:</p>
+    <pre><code>topo2geo <span class="hljs-_">-l</span> &lt; us.json
+</code></pre>
+    <p>Will output this:</p>
+    <pre><code><span class="hljs-attribute">counties
+states
+nation</span>
+</code></pre>
+    <h3 id="topomerge">topomerge</h3>
+    <p><a name="topomerge" href="#topomerge">#</a> <b>topomerge</b> [<i>options…</i>]
+        &lt;<i>target</i>=<i>source</i>&gt; [<i>file</i>] <a
+            href="topomerge.html" title="Source">&lt;&gt;</a></p>
+    <p>Merges polygons (or meshes lines) from the specified <em>source</em> TopoJSON geometry collection object,
+        assigning to the <em>target</em> object.</p>
+    <p>See also <a href="#mergeArcs">topojson.mergeArcs</a> and <a href="#meshArcs">topojson.meshArcs</a>.</p>
+    <p><a name="topomerge_help" href="#topomerge_help">#</a> topomerge <b>-h</b>
+        <br><a href="#topomerge_help">#</a> topomerge <b>--help</b>
+    </p>
+    <p>Output usage information.</p>
+    <p><a name="topomerge_version" href="#topomerge_version">#</a> topomerge <b>-V</b>
+        <br><a href="#topomerge_version">#</a> topomerge <b>--version</b>
+    </p>
+    <p>Output the version number.</p>
+    <p><a name="topomerge_out" href="#topomerge_out">#</a> topomerge <b>-o</b> <i>file</i>
+        <br><a href="#topomerge_out">#</a> topomerge <b>--out</b> <i>file</i>
+    </p>
+    <p>Specify the output TopoJSON file name. Defaults to “-” for stdout.</p>
+    <p><a name="topomerge_key" href="#topomerge_key">#</a> topomerge <b>-k</b> <i>expression</i>
+        <br><a href="#topomerge_key">#</a> topomerge <b>--key</b> <i>expression</i>
+    </p>
+    <p>Specify a JavaScript <em>expression</em>, given a TopoJSON geometry object <em>d</em> and its zero-based index
+        <em>i</em> in its parent collection, that determines how geometry objects are grouped before merging; each group
+        is merged separately. For example, given a topology of U.S. <em>counties</em>, where the <em>id</em> of each
+        county is it’s five-digit FIPS code, the county boundaries can be merged into state boundaries by using the
+        first two digits of the county FIPS code, which represents the state FIPS code:</p>
+    <pre><code>topomerge states=counties -k <span class="hljs-string">'d.id.slice(0, 2)'</span> &lt; us-counties<span class="hljs-selector-class">.json</span> &gt; us-states.json
+</code></pre>
+    <p>If a key is not specified, all input geometry objects will be merged together. For example, this can be used to
+        merge the state boundaries into a single nation boundary:</p>
+    <pre><code>topomerge nation=states &lt; <span class="hljs-keyword">us</span>-states.json &gt; <span class="hljs-keyword">us</span>.json
+</code></pre>
+    <p><a name="topomerge_filter" href="#topomerge_filter">#</a> topomerge <b>-f</b> <i>expression</i>
+        <br><a href="#topomerge_filter">#</a> topomerge <b>--filter</b> <i>expression</i>
+    </p>
+    <p>Specify a JavaScript <em>expression</em> that filters the input geometries before merging or meshing. In
+        conjunction with <a href="#topomerge_mesh">--mesh</a>, the <em>expression</em> is given two TopoJSON geometry
+        objects <em>a</em> and <em>b</em> that represent the adjacent features for a given arc segment; if the
+        <em>expression</em> evaluates truthily, the associated arc segment is retained in mesh. Otherwise, the
+        <em>expression</em> is given an input TopoJSON geometry object <em>d</em> and its zero-based index <em>i</em> in
+        its parent collection; if the <em>expression</em> evaluates truthily, the geometry object is retained in the
+        merged polygon.</p>
+    <p><a name="topomerge_mesh" href="#topomerge_mesh">#</a> topomerge <b>--mesh</b></p>
+    <p>Use <a href="#meshArcs">topojson.meshArcs</a> instead of <a href="#mergeArcs">topojson.mergeArcs</a>, generating
+        a geometry collection of lines rather than polygons.</p>
+    <h3 id="topoquantize">topoquantize</h3>
+    <p><a name="topoquantize" href="#topoquantize">#</a> <b>topoquantize</b> [<i>options…</i>] &lt;<i>n</i>&gt;
+        [<i>file</i>] <a href="quantity.html"
+            title="Source">&lt;&gt;</a></p>
+    <p>Quantizes the coordinates of the input TopoJSON topology and <a
+            href="TopoJSOSpecification.html">delta-encodes</a> the topology’s arcs.
+        The quantization parameter <em>n</em> must be a positive integer greater than one, and determines the maximum
+        expressible number of unique values per dimension in the resulting quantized coordinates; typically, a power of
+        ten is chosen such as 1e4, 1e5 or 1e6. If the <em>topology</em> does not already have a <a
+            href="#bbox">bbox</a>, one is computed and assigned. If the <em>topology</em> is already quantized, an error
+        is thrown. See also <a href="#quantize">topojson.quantize</a>.</p>
+    <p><a name="topoquantize_help" href="#topoquantize_help">#</a> topoquantize <b>-h</b>
+        <br><a href="#topoquantize_help">#</a> topoquantize <b>--help</b>
+    </p>
+    <p>Output usage information.</p>
+    <p><a name="topoquantize_version" href="#topoquantize_version">#</a> topoquantize <b>-V</b>
+        <br><a href="#topoquantize_version">#</a> topoquantize <b>--version</b>
+    </p>
+    <p>Output the version number.</p>
+    <p><a name="topoquantize_out" href="#topoquantize_out">#</a> topoquantize <b>-o</b> <i>file</i>
+        <br><a href="#topoquantize_out">#</a> topoquantize <b>--out</b> <i>file</i>
+    </p>
+    <p>Specify the output TopoJSON file name. Defaults to “-” for stdout.</p>
+    </main>
+
+
+
+    <!-- footer  -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+
+                    <ul class="footer-links">
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">General Inquiries</h6>
+                                <p><a href="mailto:info@pinnisoft.com">info@aidenvironment.org</a>
+                                </p>
+                                <p></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">Call us on</h6>
+                                <p><a href="https://wa.link/d6r2ly"> +256 (0)393208817</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <h6 class="address-type">Physical address</h6>
+                            <p><span class="z8gr9e">Plot 99 Luthuli Avenue, Kampala
+                                    Uganda</span></p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-xs-6 col-md-4" id="quick">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="https://aidenvironment.org/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="https://aidenvironment.org/code-of-conduct/">Code of Conduct</a></li>
+                        <li><a href="https://aidenvironment.org/contact/">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3" id="categories">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="command-reference.html">Command Reference</a></li>
+                        <li><a href="command-line-tool.html">Command Line Tool</a></li>
+                        <li><a href="topotopy.html">Topology</a></li>
+                        <li><a href="tutoial.html">Tutorial</a></li>
+                        <li><a href="web-interface.html">Web-interface</a></li>
+                        <li><a href="using-shapefiles.html">Using Shapefiles</a></li>
+                        <li><a href="simplification.html">Simplification</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="absolute-footer">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 logo">
+                    <a class="navbar-brand" href="home.html">
+                        <img src="assets/pics/aidlogo.png" alt="Logo" id="navbar-logo">
+                        <!-- <span class="logo-text"> aid enviroment</span> -->
+                    </a>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div>&copy; <span class="copyright-year">2023</span>
+                        AidEnvironment. All rights reserved.
+                        <span class="Links">
+                            <a href="https://www.pinnisoft.com/#[object%20Object]" id="foot-link"
+                                data-nls="footer-link-contact" target="_blank">PinniSOFT
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://facebook.com/aidenvironment">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li><a class="twitter" href="https://www.twitter.com/aidenvironment">
+                                <i class="fa-brands fa-x-twitter"></i></a>
+                        </li>
+                        <li><a class="dribbble" href="https://www.youtube.com/@aidenvironment7565">
+                                <i class="fa-brands fa-youtube"></i></a>
+                        </li>
+                        <li><a class="linkedin" href="https://ug.linkedin.com/company/aidenvironment">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find the element that contains the copyright year
+            var copyrightYearElement = document.querySelector(".copyright-year");
+
+            if (copyrightYearElement) {
+
+                var currentYear = new Date().getFullYear();
+
+
+                copyrightYearElement.textContent = currentYear;
+            }
+        });
+    </script>
+    <script>
+        // Activate Bootstrap navbar-toggler
+        $(document).ready(function () {
+            $('.navbar-toggler').on('click', function () {
+                $(this).toggleClass('active');
+            });
+        });
+
+        // Make the header sticky on scroll
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 100) {
+                $('.navbar').addClass('sticky-header');
+            } else {
+                $('.navbar').removeClass('sticky-header');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 800, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    </script>
+    <script src="assets/js/offcanvas.js"></script>
+
+    <script src="assets/links/slim.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>

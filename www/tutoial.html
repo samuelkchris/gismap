@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tutorial</title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , minimal-ui">
+    <meta name="AidEnviroment, PinniSOFT">
+    <meta name="web_author" content="Not-for-profit sustainability strategy organisation">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description"
+        content="We are a not-for-profit sustainability research, strategy and implementation organisation working to achieve transformative sector change.">
+
+
+    <script>
+        // Initialize Font Awesome
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="assets\\fontawesome-free-6.4.2-web\\js\\all.min.js"></script>
+
+
+
+    <!-- links -->
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/brands.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/solid.css">
+
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/font.css">
+    <link rel="stylesheet" href="assets/css/mapshaper.css">
+
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work.css">
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work2.css">
+
+    <script src="assets/links/jquery.min.js"></script>
+    <script src="assets/links/popper.min.js"></script>
+    <script src="assets/links/bootstrap.bundle.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="assets/pics/favicon.ico">
+    <style>
+        body {
+            
+            background-color: #ffffff;
+            margin: 0;
+            
+            color: #333;
+        }
+        .main{
+            padding: 30px;
+            padding-top: 100px;
+        }
+
+        h1, h2, h3 {
+            color: #333;
+        }
+        
+        h2{
+            border-bottom: #000 2px solid;
+        }
+        
+
+        p {
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .main img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        pre {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="header-container">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light custom-navbar">
+            <div class="logo">
+                <a class="navbar-brand" href="command-line-tool.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo">
+
+                </a>
+            </div>
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-line-tool.html">Command Line Tool</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-reference.html">Command Reference</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="simplification.html">Simplification</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topotopy.html">Topotopy</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link active" href="tutoial.html">Tutorial</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="using-shapefiles.html">Using Shapefiles</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topojson.html">TopoJSON Client</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <main class="main">
+
+
+        <h2 class="title">Tutorial: Combining two layers</h2>
+        <br>
+        <p>This walk through will help you combine and prune two layers to output a GeoJSON basemap that you can import into Datawrapper for use as a basemap.</p>
+
+        <section>
+            <h4>A bit of context</h4>
+            <p> <a href="https://www.datawrapper.de/">Datawrapper</a> will let you use any boundary file as a basemap, but it has to be in TopoJSON or GeoJSON format, and meet a <a href="https://academy.datawrapper.de/article/145-how-to-upload-your-own-map">few other requirements</a>.
+            </p>
+            <br>
+            <p>I wanted to create a basemap of Bay Area counties so I could use datawrapper for more local maps. That meant I was going to need to find a basemap, cut out the areas beyond the Bay Area, and convert it to a supported JSON format.</p>
+            <br>
+            <p>I started at the Californa Open Data Portal, where the state makes US Census <a href="https://data.ca.gov/dataset/ca-geographic-boundaries"> county, State and place boundary files</a> available. Unfortunately, these boundary files aren't clipped to the shoreline. So while they're technically accurate, they're not going to resonate with someone who is used to looking at maps of land.</p>
+            <img src="assets/pics/Web capture_22-12-2023_10231_localhost.jpeg" alt="Simplify Command Example">
+        </section>
+
+        <section>
+            
+
+            <p>There are a few ways I could go about clipping the legal boundaries to the shoreline, but the easiest was to search for a map that was already clipped to the shoreline. Luckily, <a href="https://geodata.lib.berkeley.edu/catalog/">Cal's library</a>  maintains their own Geo Data commons and it includes a <a href="https://geodata.lib.berkeley.edu/catalog/ark28722-s7hs4j">boundary file that is clipped to the shoreline</a> .</p>
+            <img src="assets/pics/Web capture_22-12-2023_1037_localhost.jpeg" alt="Preserve Key Features">
+            <br>
+            <p>I wanted a layer that would show us the actual boundaries of Alameda County cities, too. The library's <a href="https://geodata.lib.berkeley.edu/catalog/ark28722-s7bp4z"> Places</a> boundary file includes those.</p>
+        </section>
+
+        <section>
+
+            <h2 class="title">Enter Mapshaper</h2>
+            <p>First, download the <code>.zip</code> files, and upload them to <a href="https://mapshaper.org/">Mapshaper's web interface</a>.</p>
+            <br>
+            <p>Based on <a href="https://academy.datawrapper.de/article/145-how-to-upload-your-own-map">Datawrapper's instructions</a> for transforming maps, your next steps are these:</p>
+
+                <p>On each layer set the <a href="https://xkcd.com/977/">projection</a> with <code>proj wgs84</code>  -- just open the sidebar console and type that command in. Note: I ran <code>proj wgs84 </code>twice, once with each layer selected. There might be a way to apply the command to multiple layers.</p>
+                <p> <code>proj </code><a href="command-reference.html"> command reference</a></p>
+            <br>
+            <br>
+            <h5>Clipping layers</h5>
+            <p>The data in california_place_clipped is statewide, so we need to drop the places that are outside of the bay area.
+
+                With california_place_clipped selected, run <code> clip bayarea_county</code> to drop all places outside of Bay Area Counties.</p>
+                <p> <code>clip </code><a href="command-reference.html"> command reference</a></p>
+                <br>
+                <p>Alternatively, a filter would work, since california_place_clipped includes a "County" field:<br>
+
+                    <pre><code>filter '"Marin, Contra Costa, Alameda, San Francisco, Santa Clara, San Mateo".indexOf(COUNTY)  -1'</code></pre> </p><br>
+                    <p> <code>filter </code><a href="command-reference.html"> command reference</a></p> 
+                <br>
+                <h5>Merge the layers</h5>
+            <p>The data is still stored in two layers. To merge the layers into a single boundary file, use:<br>
+                
+
+                <pre><code>merge-layers target=bayarea_county,california_place_clipped force</code></pre> <br>
+                
+                Learning Opportunity: try the command without the <code>force </code> flag and see if you can sort out what <code>force </code> is doing!</p>
+                <p> <code>merge-layers </code><a href="command-reference.html"> command reference</a></p>
+                <br>
+                <br>
+                <h5>Now What</h5>
+                <p>Now you can export the combined layer as a single GeoJSON file. In a future tutorial we'll play with adding place labels</p>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+
+                    <ul class="footer-links">
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">General Inquiries</h6>
+                                <p><a href="mailto:info@pinnisoft.com">info@aidenvironment.org</a>
+                                </p>
+                                <p></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">Call us on</h6>
+                                <p><a href="https://wa.link/d6r2ly"> +256 (0)393208817</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <h6 class="address-type">Physical address</h6>
+                            <p><span class="z8gr9e">Plot 99 Luthuli Avenue, Kampala
+                                    Uganda</span></p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-xs-6 col-md-4" id="quick">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="https://aidenvironment.org/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="https://aidenvironment.org/code-of-conduct/">Code of Conduct</a></li>
+                        <li><a href="https://aidenvironment.org/contact/">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3" id="categories">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="command-reference.html">Command Reference</a></li>
+                        <li><a href="command-line-tool.html">Command Line Tool</a></li>
+                        <li><a href="topotopy.html">Topology</a></li>
+                        <li><a href="tutoial.html">Tutorial</a></li>
+                        <li><a href="web-interface.html">Web-interface</a></li>
+                        <li><a href="using-shapefiles.html">Using Shapefiles</a></li>
+                        <li><a href="simplification.html">Simplification</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="absolute-footer">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 logo">
+                    <a class="navbar-brand" href="home.html">
+                        <img src="assets/pics/aidlogo.png" alt="Logo" id="navbar-logo">
+                        <!-- <span class="logo-text"> aid enviroment</span> -->
+                    </a>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div>&copy; <span class="copyright-year">2023</span>
+                        AidEnvironment. All rights reserved.
+                        <span class="Links">
+                            <a href="https://www.pinnisoft.com/#[object%20Object]" id="foot-link"
+                                data-nls="footer-link-contact" target="_blank">PinniSOFT
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://facebook.com/aidenvironment">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li><a class="twitter" href="https://www.twitter.com/aidenvironment">
+                                <i class="fa-brands fa-x-twitter"></i></a>
+                        </li>
+                        <li><a class="dribbble" href="https://www.youtube.com/@aidenvironment7565">
+                                <i class="fa-brands fa-youtube"></i></a>
+                        </li>
+                        <li><a class="linkedin" href="https://ug.linkedin.com/company/aidenvironment">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find the element that contains the copyright year
+            var copyrightYearElement = document.querySelector(".copyright-year");
+
+            if (copyrightYearElement) {
+
+                var currentYear = new Date().getFullYear();
+
+
+                copyrightYearElement.textContent = currentYear;
+            }
+        });
+    </script>
+    <script>
+        // Activate Bootstrap navbar-toggler
+        $(document).ready(function () {
+            $('.navbar-toggler').on('click', function () {
+                $(this).toggleClass('active');
+            });
+        });
+
+        // Make the header sticky on scroll
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 100) {
+                $('.navbar').addClass('sticky-header');
+            } else {
+                $('.navbar').removeClass('sticky-header');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 800, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    </script>
+    <script src="assets/js/offcanvas.js"></script>
+
+    <script src="assets/links/slim.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>

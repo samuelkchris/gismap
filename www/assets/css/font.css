@@ -1,0 +1,14 @@
+/* @font-face {
+    font-family: 'Work Sans';
+    src: url("../work-sans-cufonfonts/WorkSans-Thin.ttf");
+}
+
+@font-face {
+    font-family: 'Work Sans';
+    src: url("../work-sans-cufonfonts/WorkSans-Thin.ttf");
+    fallback: 'Work Sans';
+}
+
+* {
+    font-family: 'Work Sans';
+} */

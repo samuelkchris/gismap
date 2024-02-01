@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Topology Specification</title>
+
+    <!-- meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 , minimal-ui">
+    <meta name="AidEnviroment, PinniSOFT">
+    <meta name="web_author" content="Not-for-profit sustainability strategy organisation">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="description"
+        content="We are a not-for-profit sustainability research, strategy and implementation organisation working to achieve transformative sector change.">
+
+
+    <script>
+        // Initialize Font Awesome
+        window.FontAwesomeConfig = { autoReplaceSvg: 'nest' };
+    </script>
+    <script src="assets\\fontawesome-free-6.4.2-web\\js\\all.min.js"></script>
+
+
+
+    <!-- links -->
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/brands.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6.4.2-web/css/solid.css">
+
+    <link rel="stylesheet" href="assets/links/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/bootstrap/font.css">
+    <link rel="stylesheet" href="assets/css/mapshaper.css">
+
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work.css">
+    <link rel="stylesheet" href="assets/franklin-gothic-cufonfonts/work2.css">
+
+    <script src="assets/links/jquery.min.js"></script>
+    <script src="assets/links/popper.min.js"></script>
+    <script src="assets/links/bootstrap.bundle.min.js"></script>
+
+    <link rel="icon" type="image/x-icon" href="assets/pics/favicon.ico">
+    <style>
+        body {
+
+            background-color: #ffffff;
+            margin: 0;
+
+            color: #333;
+        }
+
+        .main {
+            padding: 30px;
+            padding-top: 100px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+
+        h6,
+        h4 {
+            font-weight: bold;
+        }
+
+        h2 {
+            border-bottom: #000 2px solid;
+        }
+
+        h4 {
+            border-bottom: #333 2px thin;
+        }
+
+        .main .title {
+            border-bottom: 2px thin #333;
+        }
+
+
+        p {
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+        }
+
+        ul {
+            list-style-type: disc;
+            padding-left: 40px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        pre {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        code {
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+    <!-- header  -->
+    <header class="header-container">
+
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light custom-navbar">
+            <div class="logo">
+                <a class="navbar-brand" href="command-line-tool.html">
+                    <img src="assets/pics/aidlogo.png" alt="Logo">
+
+                </a>
+            </div>
+
+            <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="navbar-collapse offcanvas-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-line-tool.html">Command Line Tool</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="command-reference.html">Command Reference</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="simplification.html">Simplification</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topotopy.html">Topotopy</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="tutoial.html">Tutorial</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="web-interface.html">Web Interface</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="using-shapefiles.html">Using Shapefiles</a>
+                    </li>
+                    <li class="nav-item" id="nav-item">
+                        <a class="nav-link" href="topojson.html">TopoJSON</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- body  -->
+    <main class="main">
+
+        <h1 id="the-topojson-format-specification">The TopoJSON Format Specification</h1>
+        <p>Authors:</p>
+        <ul>
+            <li>Mike Bostock (The New York Times)</li>
+            <li>Calvin Metcalf (Massachusetts Department of Transportation)</li>
+        </ul>
+        <p><strong>Abstract</strong></p>
+        <p>TopoJSON is a topological geospatial data interchange format based on GeoJSON.</p>
+        <p><strong>Contents</strong></p>
+        <ul>
+            <li>1. <a href="#1-introduction">Introduction</a>
+                <ul>
+                    <li>1.1. <a href="#11-examples">Examples</a></li>
+                    <li>1.2. <a href="#12-definitions">Definitions</a></li>
+                </ul>
+            </li>
+            <li>2. <a href="#2-topojson-objects">TopoJSON Objects</a>
+                <ul>
+                    <li>2.1. <a href="#21-topology-objects">Topology Objects</a>
+                        <ul>
+                            <li>2.1.1. <a href="#211-positions">Positions</a></li>
+                            <li>2.1.2. <a href="#212-transforms">Transforms</a></li>
+                            <li>2.1.3. <a href="#213-arcs">Arcs</a></li>
+                            <li>2.1.4. <a href="#214-arc-indexes">Arc Indexes</a></li>
+                            <li>2.1.5. <a href="#215-objects">Objects</a></li>
+                        </ul>
+                    </li>
+                    <li>2.2. <a href="#22-geometry-objects">Geometry Objects</a>
+                        <ul>
+                            <li>2.2.1. <a href="#221-point">Point</a></li>
+                            <li>2.2.2. <a href="#222-multipoint">MultiPoint</a></li>
+                            <li>2.2.3. <a href="#223-linestring">LineString</a></li>
+                            <li>2.2.4. <a href="#224-multilinestring">MultiLineString</a></li>
+                            <li>2.2.5. <a href="#225-polygon">Polygon</a></li>
+                            <li>2.2.6. <a href="#226-multipolygon">MultiPolygon</a></li>
+                            <li>2.2.7. <a href="#227-geometry-collection">Geometry Collection</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li>3. <a href="#3-bounding-boxes">Bounding Boxes</a></li>
+        </ul>
+        <h2 id="1-introduction">1. Introduction</h2>
+        <p>TopoJSON is a <a href="http://json.org/">JSON</a> format for encoding geographic data structures into a
+            shared topology. A TopoJSON topology represents one or more geometries that share sequences of positions
+            called <em>arcs</em>. TopoJSON, as an extension of <a href="http://geojson.org/">GeoJSON</a>, supports
+            multiple geometry types: Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon, and
+            GeometryCollection. Geometries in TopoJSON may contain additional properties to encode non-geometrical data.
+        </p>
+        <h3 id="1-1-examples">1.1. Examples</h3>
+        <p>A TopoJSON topology containing a single object named “example”, itself a geometry collection:</p>
+        <pre><code class="lang-json">{
+  <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Topology"</span>,
+  <span class="hljs-attr">"objects"</span>: {
+    <span class="hljs-attr">"example"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"GeometryCollection"</span>,
+      <span class="hljs-attr">"geometries"</span>: [
+        {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Point"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"prop0"</span>: <span class="hljs-string">"value0"</span>
+          },
+          <span class="hljs-attr">"coordinates"</span>: [<span class="hljs-number">102</span>, <span class="hljs-number">0.5</span>]
+        },
+        {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"LineString"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"prop0"</span>: <span class="hljs-string">"value0"</span>,
+            <span class="hljs-attr">"prop1"</span>: <span class="hljs-number">0</span>
+          },
+          <span class="hljs-attr">"arcs"</span>: [<span class="hljs-number">0</span>]
+        },
+        {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Polygon"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"prop0"</span>: <span class="hljs-string">"value0"</span>,
+            <span class="hljs-attr">"prop1"</span>: {
+              <span class="hljs-attr">"this"</span>: <span class="hljs-string">"that"</span>
+            }
+          },
+          <span class="hljs-attr">"arcs"</span>: [[<span class="hljs-number">-2</span>]]
+        }
+      ]
+    }
+  },
+  <span class="hljs-attr">"arcs"</span>: [
+    [[<span class="hljs-number">102</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">103</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">104</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">105</span>, <span class="hljs-number">1</span>]],
+    [[<span class="hljs-number">100</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">101</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">100</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">100</span>, <span class="hljs-number">0</span>]]
+  ]
+}
+</code></pre>
+        <p>The same topology, quantized:</p>
+        <pre><code class="lang-json">{
+  <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Topology"</span>,
+  <span class="hljs-attr">"transform"</span>: {
+    <span class="hljs-attr">"scale"</span>: [<span class="hljs-number">0.0005000500050005</span>, <span class="hljs-number">0.00010001000100010001</span>],
+    <span class="hljs-attr">"translate"</span>: [<span class="hljs-number">100</span>, <span class="hljs-number">0</span>]
+  },
+  <span class="hljs-attr">"objects"</span>: {
+    <span class="hljs-attr">"example"</span>: {
+      <span class="hljs-attr">"type"</span>: <span class="hljs-string">"GeometryCollection"</span>,
+      <span class="hljs-attr">"geometries"</span>: [
+        {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Point"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"prop0"</span>: <span class="hljs-string">"value0"</span>
+          },
+          <span class="hljs-attr">"coordinates"</span>: [<span class="hljs-number">4000</span>, <span class="hljs-number">5000</span>]
+        },
+        {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"LineString"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"prop0"</span>: <span class="hljs-string">"value0"</span>,
+            <span class="hljs-attr">"prop1"</span>: <span class="hljs-number">0</span>
+          },
+          <span class="hljs-attr">"arcs"</span>: [<span class="hljs-number">0</span>]
+        },
+        {
+          <span class="hljs-attr">"type"</span>: <span class="hljs-string">"Polygon"</span>,
+          <span class="hljs-attr">"properties"</span>: {
+            <span class="hljs-attr">"prop0"</span>: <span class="hljs-string">"value0"</span>,
+            <span class="hljs-attr">"prop1"</span>: {
+              <span class="hljs-attr">"this"</span>: <span class="hljs-string">"that"</span>
+            }
+          },
+          <span class="hljs-attr">"arcs"</span>: [[<span class="hljs-number">1</span>]]
+        }
+      ]
+    }
+  },
+  <span class="hljs-attr">"arcs"</span>: [
+    [[<span class="hljs-number">4000</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">1999</span>, <span class="hljs-number">9999</span>], [<span class="hljs-number">2000</span>, <span class="hljs-number">-9999</span>], [<span class="hljs-number">2000</span>, <span class="hljs-number">9999</span>]],
+    [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">9999</span>], [<span class="hljs-number">2000</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">0</span>, <span class="hljs-number">-9999</span>], [<span class="hljs-number">-2000</span>, <span class="hljs-number">0</span>]]
+  ]
+}
+</code></pre>
+        <h3 id="1-2-definitions">1.2. Definitions</h3>
+        <p>JavaScript Object Notation (JSON), and the terms “object”, “name”, “value”, “array”, and “number”, are
+            defined in <a href="http://www.ietf.org/rfc/rfc4627.txt">IETF RTC 4627</a>.</p>
+        <p>The key words “MUST”, “MUST NOT”, “REQUIRED”, “SHALL”, “SHALL NOT”, “SHOULD”, “SHOULD NOT”, “RECOMMENDED”,
+            “MAY”, and “OPTIONAL” in this document are to be interpreted as described in <a
+                href="http://www.ietf.org/rfc/rfc2119.txt">IETF RFC 2119</a>.</p>
+        <p>All floating point numbers must be treated as double precision floats and all integers must be 32-bit signed
+            integers.</p>
+        <h2 id="2-topojson-objects">2. TopoJSON Objects</h2>
+        <p>TopoJSON always consists of a single topology object. A topology may contain any number of named geometry
+            objects. The term “TopoJSON object” may refer to either a topology or a geometry object it contains.</p>
+        <ul>
+            <li>A TopoJSON object may have any number of members (name/value pairs).</li>
+            <li>A TopoJSON object must have a member with the name “type”. This member’s value is a string that
+                determines the type of the TopoJSON object.</li>
+            <li>The value of the type member must be one of: “Topology”, “Point”, “MultiPoint”, “LineString”,
+                “MultiLineString”, “Polygon”, “MultiPolygon” or “GeometryCollection”. The case of the type member values
+                must be as shown here.</li>
+            <li>A TopoJSON object may have a “bbox” member, the value of which must be a bounding box array.</li>
+        </ul>
+        <h3 id="2-1-topology-objects">2.1. Topology Objects</h3>
+        <p>A topology is a TopoJSON object where the type member’s value is “Topology”.</p>
+        <ul>
+            <li>A topology must have a member with the name “objects” whose value is another object. The value of each
+                member of this object is a geometry object.</li>
+            <li>A topology must have a member with the name “arcs” whose value is an array of arcs.</li>
+            <li>A topology may have a “transform” member, whose value must be a transform.</li>
+            <li>A topology may have a “bbox” member, whose value must be a bounding box array.</li>
+        </ul>
+        <h4 id="2-1-1-positions">2.1.1. Positions</h4>
+        <p>A position is represented by an array of numbers. There must be at least two elements, and may be more. The
+            order of elements are recommended to follow <em>x</em>, <em>y</em>, <em>z</em> order (easting, northing,
+            altitude for coordinates in a projected coordinate reference system, or longitude, latitude, altitude for
+            coordinates in a geographic coordinate reference system). Any number of additional elements are allowed —
+            interpretation and meaning of additional elements is beyond the scope of this specification.</p>
+        <h4 id="2-1-2-transforms">2.1.2. Transforms</h4>
+        <p>A topology may have a “transform” member whose value is a transform object. The purpose of the transform is
+            to quantize positions for more efficient serialization, by representing positions as integers rather than
+            floats.</p>
+        <ul>
+            <li>A transform must have a member with the name “scale” whose value is a two-element array of numbers.</li>
+            <li>A transform must have a member with the name “translate” whose value is a two-element array of numbers.
+            </li>
+        </ul>
+        <p>Both the “scale” and “translate” members must be of length two. Every position in the topology must be
+            quantized, with the first and second elements in each position an integer.</p>
+        <p>To transform from a quantized position to an absolute position:</p>
+        <ol>
+            <li>Multiply each quantized position element by the corresponding scale element.</li>
+            <li>Add the corresponding translate element.</li>
+        </ol>
+        <p>The following JavaScript reference implementation transforms a single position from the given quantized
+            topology to absolute coordinates:</p>
+        <pre><code class="lang-js">function transformPoint(topology, <span class="hljs-built_in">position</span>) {
+  <span class="hljs-built_in">position</span> = <span class="hljs-built_in">position</span>.slice();
+  <span class="hljs-built_in">position</span>[<span class="hljs-number">0</span>] = <span class="hljs-built_in">position</span>[<span class="hljs-number">0</span>] * topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">scale</span>[<span class="hljs-number">0</span>] + topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">translate</span>[<span class="hljs-number">0</span>],
+  <span class="hljs-built_in">position</span>[<span class="hljs-number">1</span>] = <span class="hljs-built_in">position</span>[<span class="hljs-number">1</span>] * topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">scale</span>[<span class="hljs-number">1</span>] + topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">translate</span>[<span class="hljs-number">1</span>]
+  <span class="hljs-built_in">return</span> <span class="hljs-built_in">position</span>;
+}
+</code></pre>
+        <p>Note that by copying the input position, the reference implementation preserves any additional dimensions
+            (such as <em>z</em>) without transforming them.</p>
+        <h4 id="2-1-3-arcs">2.1.3. Arcs</h4>
+        <p>A topology must have an “arcs” member whose value is an array of arrays of positions. Each arc must be an
+            array of two or more positions.</p>
+        <p>If a topology is quantized, the positions of each arc in the topology which are quantized must be
+            delta-encoded. The first position of the arc is a normal position [<i>x₁</i>, <i>y₁</i>]. The second
+            position [<i>x₂</i>, <i>y₂</i>] is encoded as [<i>Δx₂</i>, <i>Δy₂</i>], where <i>x₂</i> = <i>x₁</i> +
+            <i>Δx₂</i> and <i>y₂</i> = <i>y₁</i> + <i>Δy₂</i>. The third position [<i>x₃</i>, <i>y₃</i>] is encoded as
+            [<i>Δx₃</i>, <i>Δy₃</i>], where <i>x₃</i> = <i>x₂</i> + <i>Δx₃</i> = <i>x₁</i> + <i>Δx₂</i> + <i>Δx₃</i> and
+            <i>y₃</i> = <i>y₂</i> + <i>Δy₃</i> = <i>y₁</i> + <i>Δy₂</i> + <i>Δy₃</i> and so on.</p>
+        <p>The following JavaScript reference implementation decodes a single delta-encoded quantized arc from the given
+            quantized topology:</p>
+        <pre><code class="lang-js">function decodeArc(topology, arc) {
+  <span class="hljs-built_in">var</span> x = <span class="hljs-number">0</span>, y = <span class="hljs-number">0</span>;
+  <span class="hljs-built_in">return</span> arc.<span class="hljs-built_in">map</span>(function(<span class="hljs-built_in">position</span>) {
+    <span class="hljs-built_in">position</span> = <span class="hljs-built_in">position</span>.slice();
+    <span class="hljs-built_in">position</span>[<span class="hljs-number">0</span>] = (x += <span class="hljs-built_in">position</span>[<span class="hljs-number">0</span>]) * topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">scale</span>[<span class="hljs-number">0</span>] + topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">translate</span>[<span class="hljs-number">0</span>];
+    <span class="hljs-built_in">position</span>[<span class="hljs-number">1</span>] = (y += <span class="hljs-built_in">position</span>[<span class="hljs-number">1</span>]) * topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">scale</span>[<span class="hljs-number">1</span>] + topology.<span class="hljs-built_in">transform</span>.<span class="hljs-built_in">translate</span>[<span class="hljs-number">1</span>];
+    <span class="hljs-built_in">return</span> <span class="hljs-built_in">position</span>;
+  });
+}
+</code></pre>
+        <h4 id="2-1-4-arc-indexes">2.1.4. Arc Indexes</h4>
+        <p>A geometry object consisting of LineStrings (LineString or MultiLineString) or LinearRings (Polygon or
+            MultiPolygon) must be constructed from arcs. Each arc must be referenced by numeric zero-based index into
+            the containing topology’s arcs array. For example, 0 refers to the first arc, 1 refers to the second arc,
+            and so on.</p>
+        <p>A negative arc index indicates that the arc at the ones’ complement of the index must be reversed to
+            reconstruct the geometry: -1 refers to the reversed first arc, -2 refers to the reversed second arc, and so
+            on. In JavaScript, you can negate a negative arc index <code>i</code> using the <a
+                href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators#Bitwise_NOT">bitwise
+                NOT operator</a>, <code>~i</code>.</p>
+        <p>If more than one arc is referenced to construct a LineString or LinearRing, the first position of a
+            subsequent arc must be equal to the last position of the previous arc. Then, when reconstructing the
+            geometry, the first position of each arc except the first may be dropped; equivalently, the last position of
+            each arc except the last may be dropped.</p>
+        <h4 id="2-1-5-objects">2.1.5. Objects</h4>
+        <p>A topology must have an “objects” member whose value is an object. This object may have any number of
+            members, whose value must be a geometry object.</p>
+        <h3 id="2-2-geometry-objects">2.2. Geometry Objects</h3>
+        <p>A geometry is a TopoJSON object where the type member’s value is one of the following strings: “Point”,
+            “MultiPoint”, “LineString”, “MultiLineString”, “Polygon”, “MultiPolygon”, or “GeometryCollection”.</p>
+        <p>A TopoJSON geometry object of type “Point” or “MultiPoint” must have a member with the name “coordinates”. A
+            TopoJSON geometry object of type “LineString”, “MultiLineString”, “Polygon”, or “MultiPolygon” must have a
+            member with the name “arcs”. The value of the arcs and coordinates members is always an array. The structure
+            for the elements in this array is determined by the type of geometry.</p>
+        <p>If a geometry has a commonly used identifier, that identifier should be included as a member of the geometry
+            object with the name “id”. A geometry object may have a member with the name “properties”. The value of the
+            properties member is an object (any JSON object or a JSON null value).</p>
+        <h4 id="2-2-1-point">2.2.1. Point</h4>
+        <p>For type “Point”, the “coordinates” member must be a single position.</p>
+        <h4 id="2-2-2-multipoint">2.2.2. MultiPoint</h4>
+        <p>For type “MultiPoint”, the “coordinates” member must be an array of positions.</p>
+        <h4 id="2-2-3-linestring">2.2.3. LineString</h4>
+        <p>For type “LineString”, the “arcs” member must be an array of arc indexes.</p>
+        <h4 id="2-2-4-multilinestring">2.2.4. MultiLineString</h4>
+        <p>For type “MultiLineString”, the “arcs” member must be an array of LineString arc indexes.</p>
+        <h4 id="2-2-5-polygon">2.2.5. Polygon</h4>
+        <p>For type “Polygon”, the “arcs” member must be an array of LinearRing arc indexes. For Polygons with multiple
+            rings, the first must be the exterior ring and any others must be interior rings or holes.</p>
+        <p>A LinearRing is closed LineString with 4 or more positions. The first and last positions are equivalent (they
+            represent equivalent points).</p>
+        <h4 id="2-2-6-multipolygon">2.2.6. MultiPolygon</h4>
+        <p>For type “MultiPolygon”, the “arcs” member must be an array of Polygon arc indexes.</p>
+        <h4 id="2-2-7-geometry-collection">2.2.7. Geometry Collection</h4>
+        <p>A TopoJSON object with type “GeometryCollection” is a geometry object which represents a collection of
+            geometry objects.</p>
+        <p>A geometry collection must have a member with the name “geometries” whose value is an array. Each element in
+            this array is a TopoJSON geometry object.</p>
+        <h2 id="3-bounding-boxes">3. Bounding Boxes</h2>
+        <p>To include information on the coordinate range for a topology or geometry a TopoJSON object may have a member
+            named “bbox”. The value of the bbox member must be a 2*<i>n</i> array where <em>n</em> is the number of
+            dimensions represented in the contained geometries, with the lowest values for all axes followed by the
+            highest values. The axes order of a bbox follows the axes order of geometries. The bounding box should not
+            be transformed using the topology’s transform, if any.</p>
+
+
+    </main>
+
+
+    <!-- footer  -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-5">
+
+                    <ul class="footer-links">
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">General Inquiries</h6>
+                                <p><a href="mailto:info@pinnisoft.com">info@aidenvironment.org</a>
+                                </p>
+                                <p></p>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="contact-detail">
+                                <h6 class="contact-type">Call us on</h6>
+                                <p><a href="https://wa.link/d6r2ly"> +256 (0)393208817</a></p>
+                            </div>
+                        </li>
+                        <li>
+                            <h6 class="address-type">Physical address</h6>
+                            <p><span class="z8gr9e">Plot 99 Luthuli Avenue, Kampala
+                                    Uganda</span></p>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <div class="col-xs-6 col-md-4" id="quick">
+                    <h6>Categories</h6>
+                    <ul class="footer-links">
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="https://aidenvironment.org/privacy-policy/">Privacy Policy</a></li>
+                        <li><a href="https://aidenvironment.org/code-of-conduct/">Code of Conduct</a></li>
+                        <li><a href="https://aidenvironment.org/contact/">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-xs-6 col-md-3" id="categories">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="command-reference.html">Command Reference</a></li>
+                        <li><a href="command-line-tool.html">Command Line Tool</a></li>
+                        <li><a href="topotopy.html">Topology</a></li>
+                        <li><a href="tutoial.html">Tutorial</a></li>
+                        <li><a href="web-interface.html">Web-interface</a></li>
+                        <li><a href="using-shapefiles.html">Using Shapefiles</a></li>
+                        <li><a href="simplification.html">Simplification</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr>
+        </div>
+        <div class="absolute-footer">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-12 logo">
+                    <a class="navbar-brand" href="home.html">
+                        <img src="assets/pics/aidlogo.png" alt="Logo" id="navbar-logo">
+                        <!-- <span class="logo-text"> aid enviroment</span> -->
+                    </a>
+                </div>
+
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div>&copy; <span class="copyright-year">2023</span>
+                        AidEnvironment. All rights reserved.
+                        <span class="Links">
+                            <a href="https://www.pinnisoft.com/#[object%20Object]" id="foot-link"
+                                data-nls="footer-link-contact" target="_blank">PinniSOFT
+                            </a>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <ul class="social-icons">
+                        <li><a class="facebook" href="https://facebook.com/aidenvironment">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                        </li>
+                        <li><a class="twitter" href="https://www.twitter.com/aidenvironment">
+                                <i class="fa-brands fa-x-twitter"></i></a>
+                        </li>
+                        <li><a class="dribbble" href="https://www.youtube.com/@aidenvironment7565">
+                                <i class="fa-brands fa-youtube"></i></a>
+                        </li>
+                        <li><a class="linkedin" href="https://ug.linkedin.com/company/aidenvironment">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </footer>
+
+
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find the element that contains the copyright year
+            var copyrightYearElement = document.querySelector(".copyright-year");
+
+            if (copyrightYearElement) {
+
+                var currentYear = new Date().getFullYear();
+
+
+                copyrightYearElement.textContent = currentYear;
+            }
+        });
+    </script>
+    <script>
+        // Activate Bootstrap navbar-toggler
+        $(document).ready(function () {
+            $('.navbar-toggler').on('click', function () {
+                $(this).toggleClass('active');
+            });
+        });
+
+        // Make the header sticky on scroll
+        $(window).on('scroll', function () {
+            if ($(window).scrollTop() > 100) {
+                $('.navbar').addClass('sticky-header');
+            } else {
+                $('.navbar').removeClass('sticky-header');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        $('a[href^="#"]').on('click', function (e) {
+            e.preventDefault();
+
+            var target = this.hash;
+            var $target = $(target);
+
+            $('html, body').stop().animate({
+                'scrollTop': $target.offset().top
+            }, 800, 'swing', function () {
+                window.location.hash = target;
+            });
+        });
+    </script>
+    <script src="assets/js/offcanvas.js"></script>
+
+    <script src="assets/links/slim.min.js"></script>
+
+
+
+
+
+</body>
+
+</html>
